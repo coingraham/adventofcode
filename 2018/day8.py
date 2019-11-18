@@ -37,6 +37,7 @@ def process_root_node(input):
                 score += child_scores[node]
         return score
 
+
 if __name__ == '__main__':
 
     print(process_node(d8.tree_ints.copy()))
