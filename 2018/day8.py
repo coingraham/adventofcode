@@ -14,6 +14,7 @@ def process_node(input):
 
     return score
 
+
 def process_root_node(input):
     number_of_children = input.pop(0)
     number_of_metadata = input.pop(0)
