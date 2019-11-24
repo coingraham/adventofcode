@@ -38,7 +38,7 @@ def get_outer_edges(space_plan):
 
 def part_one_build_space_and_walk():
 
-    space = matrix = [[j for j in range(d6.max_plane)] for i in range(d6.max_plane)]
+    space = [[j for j in range(d6.max_plane)] for i in range(d6.max_plane)]
 
     spack_tracker = {}
 
@@ -79,7 +79,7 @@ def within_10000(coord):
 
 def part_two_build_space_and_walk():
 
-    space = matrix = [[j for j in range(d6.max_plane)] for i in range(d6.max_plane)]
+    space = [[j for j in range(d6.max_plane)] for i in range(d6.max_plane)]
 
     safe_total = 0
 
