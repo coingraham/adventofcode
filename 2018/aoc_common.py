@@ -24,3 +24,9 @@ def remove_item_from_list_in_dictionary_value(dictionary, item):
             dictionary[k].remove(item)
 
     return dictionary
+
+import parse
+pr = parse.compile("{} => {}")
+# for l in ls:
+#     r = pr.parse(l)
+#     rules[r[0]] = r[1]

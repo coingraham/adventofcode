@@ -26,6 +26,7 @@ if __name__ == '__main__':
     integral = integral.astype(int)
 
 
+    # This is the calculation of the summed area table: https://en.wikipedia.org/wiki/Summed-area_table
     def check_window(x, y, width):
         offset = width - 1
         x_offset = x + offset
