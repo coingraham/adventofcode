@@ -36,7 +36,7 @@ pr = parse.compile("{} => {}")
 #     r = pr.parse(l)
 #     rules[r[0]] = r[1]
 
-
+# Functions for 2019
 def get_fuel_for_module(module):
     # return (math.floor(module / 3)) - 2
     return module // 3 - 2
@@ -57,3 +57,14 @@ def map_reduce_fuel(module_list):
 def mr_fuel_for_fuel(fuel_list):
     return reduce(operator.add, map(lambda x: get_fuel_for_fuel(x), fuel_list))
 
+
+def get_intcode(test, i, j):
+    test[1] = i
+    test[2] = j
+    for tranche in [(test[x:x + 4]) for x in range(0, len(test) - 3, 4)]:
+        if tranche[0] == 1:
+            test[tranche[3]] = test[tranche[1]] + test[tranche[2]]
+        if tranche[0] == 2:
+            test[tranche[3]] = test[tranche[1]] * test[tranche[2]]
+        if tranche[0] == 99:
+            return test[0]
