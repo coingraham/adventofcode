@@ -1,5 +1,4 @@
 import day10_input as d10
-import aoc_common
 
 
 def get_adjustment(stars):

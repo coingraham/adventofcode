@@ -1,4 +1,5 @@
 from functools import reduce
+import math
 import operator
 
 
@@ -26,11 +27,33 @@ def remove_item_from_list_in_dictionary_value(dictionary, item):
     return dictionary
 
 import itertools
-toggle = itertools.cycle(['red', 'green', 'blue']).next
-toggle()
+# toggle = itertools.cycle(['red', 'green', 'blue']).next
+# toggle()
 
 import parse
 pr = parse.compile("{} => {}")
 # for l in ls:
 #     r = pr.parse(l)
 #     rules[r[0]] = r[1]
+
+
+def get_fuel_for_module(module):
+    # return (math.floor(module / 3)) - 2
+    return module // 3 - 2
+
+
+def get_fuel_for_fuel(fuel):
+    current_fuel = math.floor(fuel / 3) - 2
+    if current_fuel < 1:
+        return 0
+    else:
+        return current_fuel + get_fuel_for_fuel(current_fuel)
+
+
+def map_reduce_fuel(module_list):
+    return reduce(operator.add, map(lambda x: x // 3 - 2 if x > 6 else 0, module_list))
+
+
+def mr_fuel_for_fuel(fuel_list):
+    return reduce(operator.add, map(lambda x: get_fuel_for_fuel(x), fuel_list))
+
