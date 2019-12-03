@@ -17,3 +17,10 @@ for x in range(100):
         if ac.get_intcode(testing, x, y) == 19690720:
             print(100 * x + y)
             # puzzle.answer_b = 3376
+
+# Part Two with Itertools.Product Function
+for x, y in ac.x_y_iter(100, 100):
+    testing = puzzle_input.copy()
+    if ac.get_intcode(testing, x, y) == 19690720:
+        print(100 * x + y)
+        # puzzle.answer_b = 3376

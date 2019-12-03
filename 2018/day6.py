@@ -1,7 +1,7 @@
 import day6_input as d6
 import operator
 
-def get_manhatten_closest(coord1, coord2):
+def get_manhattan_closest(coord1, coord2):
     return (abs(coord1[0] - coord2[0]) + abs(coord1[1] - coord2[1]))
 
 def find_closest(coord):
@@ -9,7 +9,7 @@ def find_closest(coord):
     closest_name = ""
     dot = False
     for k, v in d6.coords_dictionary.items():
-        distance = get_manhatten_closest(coord, v)
+        distance = get_manhattan_closest(coord, v)
         if distance == closest_distance:
             dot = True
         if distance < closest_distance:
@@ -69,7 +69,7 @@ def within_10000(coord):
     safe_zone = 1
     distance_total = 0
     for k, v in d6.coords_dictionary.items():
-        distance_total += get_manhatten_closest(coord, v)
+        distance_total += get_manhattan_closest(coord, v)
         print("{} at {}".format(k, distance_total))
         if distance_total >= 10000:
             return 0

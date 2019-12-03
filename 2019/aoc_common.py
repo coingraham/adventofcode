@@ -68,3 +68,77 @@ def get_intcode(test, i, j):
             test[tranche[3]] = test[tranche[1]] * test[tranche[2]]
         if tranche[0] == 99:
             return test[0]
+
+
+def x_y_iter(x, y):
+    return itertools.product(range(x), range(y))
+
+
+def i_j_iter(i, j):
+    return itertools.product(range(i), range(j))
+
+
+def build_wire(wire, direction, amount):
+    last_item = wire[-1]
+    starting_x = last_item[0]
+    starting_y = last_item[1]
+
+    if direction == "R":
+        new_items = [[x, starting_y] for x in range(starting_x + 1, starting_x + amount + 1)]
+        wire.extend(new_items)
+        return wire
+    if direction == "L":
+        new_items = [[x, starting_y] for x in range(starting_x - 1, starting_x - amount - 1, -1)]
+        wire.extend(new_items)
+        return wire
+    if direction == "U":
+        new_items = [[starting_x, y] for y in range(starting_y + 1, starting_y + amount + 1)]
+        wire.extend(new_items)
+        return wire
+    if direction == "D":
+        new_items = [[starting_x, y] for y in range(starting_y - 1, starting_y - amount - 1, -1)]
+        wire.extend(new_items)
+        return wire
+
+
+def build_intersection_wire(wire, original_wire, direction, amount, intersection):
+    starting_x = wire[0]
+    starting_y = wire[1]
+
+    if direction == "R":
+        new_items = [[x, starting_y] for x in range(starting_x + 1, starting_x + amount + 1)]
+        for item in new_items:
+            if item in original_wire:
+                intersection.append(item)
+        return new_items[-1], intersection
+    if direction == "L":
+        new_items = [[x, starting_y] for x in range(starting_x - 1, starting_x - amount - 1, -1)]
+        for item in new_items:
+            if item in original_wire:
+                intersection.append(item)
+        return new_items[-1], intersection
+    if direction == "U":
+        new_items = [[starting_x, y] for y in range(starting_y + 1, starting_y + amount + 1)]
+        for item in new_items:
+            if item in original_wire:
+                intersection.append(item)
+        return new_items[-1], intersection
+    if direction == "D":
+        new_items = [[starting_x, y] for y in range(starting_y - 1, starting_y - amount - 1, -1)]
+        for item in new_items:
+            if item in original_wire:
+                intersection.append(item)
+        return new_items[-1], intersection
+
+
+def get_manhattan_closest(coord1, coord2):
+    return abs(coord1[0] - coord2[0]) + abs(coord1[1] - coord2[1])
+
+
+# Directional Dictionary for Grid Movements
+# DX = dict(zip('LRUD', [-1, 1, 0, 0]))
+# DY = dict(zip('LRUD', [0, 0, 1, -1]))
+# for _ in range(n):
+#     x += DX[d]
+#     y += DY[d]
+
