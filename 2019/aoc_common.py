@@ -1,6 +1,9 @@
 from functools import reduce
+import itertools
+import parse
 import math
 import operator
+import re
 
 
 def get_sum_of_array(array):
@@ -16,7 +19,7 @@ def get_max_value_of_dictionary(dictionary):
 
 
 def get_matrix(x, y):
-    return [[j for j in range(x)] for i in range(y)]
+    return [[(i, j) for j in range(x)] for i in range(y)]
 
 
 def remove_item_from_list_in_dictionary_value(dictionary, item):
@@ -26,15 +29,16 @@ def remove_item_from_list_in_dictionary_value(dictionary, item):
 
     return dictionary
 
-import itertools
-# toggle = itertools.cycle(['red', 'green', 'blue']).next
-# toggle()
 
-import parse
+toggle = itertools.cycle(['red', 'green', 'blue'])
+next(toggle)
+
+
 pr = parse.compile("{} => {}")
 # for l in ls:
 #     r = pr.parse(l)
 #     rules[r[0]] = r[1]
+
 
 # Functions for 2019
 def get_fuel_for_module(module):
@@ -135,6 +139,69 @@ def get_manhattan_closest(coord1, coord2):
     return abs(coord1[0] - coord2[0]) + abs(coord1[1] - coord2[1])
 
 
+def get_complex_distance(complex1, complex2):
+    return int(abs(complex1.real - complex2.real) + abs(complex1.imag - complex2.imag))
+
+
+def move_complex(direction, complex_number):
+    direction_map = {"U": 1j, "D": -1j, "R": 1, "L": -1}
+    return complex_number + direction_map[direction]
+
+
+def min_max(l):
+    return min(l), max(l)
+
+
+def max_minus_min(l):
+    return max(l) - min(l)
+
+
+def list_diff(x):
+    return [b-a for a, b in zip(x, x[1:])]
+
+
+def flatten(l):
+    return [i for x in l for i in x]
+
+
+def lmap(func, *iterables):
+    return list(map(func, *iterables))
+
+
+def ints(s):
+    return lmap(int, re.findall(r"-?\d+", s))
+
+
+def positive_ints(s):
+    return lmap(int, re.findall(r"\d+", s))
+
+
+def floats(s):
+    return lmap(float, re.findall(r"-?\d+(?:\.\d+)?", s))
+
+
+def positive_floats(s):
+    return lmap(float, re.findall(r"\d+(?:\.\d+)?", s))
+
+
+def words(s):
+    return re.findall(r"[a-zA-Z]+", s)
+
+
+def key_values(d):
+    return list(d.items())
+
+
+def every_digit_greater_equal(l):
+    current = l[0]
+    rest = l[1:]
+    for num in rest:
+        if num < current:
+            return False
+        current = num
+    return True
+
+
 # Directional Dictionary for Grid Movements
 # DX = dict(zip('LRUD', [-1, 1, 0, 0]))
 # DY = dict(zip('LRUD', [0, 0, 1, -1]))
@@ -142,3 +209,13 @@ def get_manhattan_closest(coord1, coord2):
 #     x += DX[d]
 #     y += DY[d]
 
+
+# complex1 = 0 + 0j
+# complex2 = 5 + 4j
+#
+# print(get_complex_distance(complex1, complex2))
+#
+# print(move_complex("U", complex1) + move_complex("U", complex1) + move_complex("L", complex1))
+# print(move_complex("D", complex1))
+# print(move_complex("L", complex1))
+# print(move_complex("R", complex1))
