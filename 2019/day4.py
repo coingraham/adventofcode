@@ -25,3 +25,8 @@ print(puzzle.answer_a)
 print(counter_b)
 print(puzzle.answer_b)
 # puzzle.answer_b = counter_b
+
+
+# Found on reddit was very interesting
+print(sum(1 for s in map(str, range(168630, 718099))
+          if list(s) == sorted(s) and 2 in [s.count(i) for i in s]))

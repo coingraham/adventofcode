@@ -202,6 +202,11 @@ def every_digit_greater_equal(l):
     return True
 
 
+def check_list_against_previous(l):
+    # return all(c1 <= c2 for c1, c2 in zip(str(num), str(num)[1:]))
+    return all(c1 <= c2 for c1, c2 in zip(str(l), str(l)[1:]))
+
+
 # Directional Dictionary for Grid Movements
 # DX = dict(zip('LRUD', [-1, 1, 0, 0]))
 # DY = dict(zip('LRUD', [0, 0, 1, -1]))
