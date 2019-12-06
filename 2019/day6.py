@@ -6,23 +6,6 @@ puzzle = Puzzle(year=2019, day=6)
 # print(puzzle.input_data)
 
 orbits = puzzle.input_data.splitlines()
-
-test2 = """COM)B
-B)C
-C)D
-D)E
-E)F
-B)G
-G)H
-D)I
-E)J
-J)K
-K)L
-K)YOU
-I)SAN"""
-
-# orbits = test2.splitlines()
-
 orbits = [x.split(")") for x in orbits]
 
 direct = len(orbits)
@@ -41,18 +24,19 @@ def search_orbits(search, orbits):
     return connections
 
 
+def single_search_orbits(search, orbits):
+    for orbit in orbits:
+        if orbit[0] == search:
+            return orbit[1]
+
+
 # Part One
 while search_letters:
     indirect += level * len(search_letters)
     level += 1
     search_letters = search_orbits(search_letters, orbits)
+
 print(direct + indirect)
-
-
-def single_search_orbits(search, orbits):
-    for orbit in orbits:
-        if orbit[0] == search:
-            return orbit[1]
 
 
 # Part Two
@@ -74,9 +58,5 @@ while True:
         san.append(new)
     else:
         break
-
-print(len(list(set(you) & set(san))))
-print("{}_{}".format(you, len(you)))
-print("{}_{}".format(san, len(san)))
 
 print(len(you) - 1 + len(san) - 1 - (len(list(set(you) & set(san)))*2))
