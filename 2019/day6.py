@@ -41,18 +41,18 @@ def search_orbits(search, orbits):
     return connections
 
 
-def single_search_orbits(search, orbits):
-    for orbit in orbits:
-        if orbit[0] == search:
-            return orbit[1]
-
-
 # Part One
 while search_letters:
     indirect += level * len(search_letters)
     level += 1
     search_letters = search_orbits(search_letters, orbits)
 print(direct + indirect)
+
+
+def single_search_orbits(search, orbits):
+    for orbit in orbits:
+        if orbit[0] == search:
+            return orbit[1]
 
 
 # Part Two
