@@ -1,28 +1,21 @@
-from collections import defaultdict
+import networkx as nx
 from aocd.models import Puzzle
 
 puzzle = Puzzle(year=2019, day=6)
 
+# Credit https://github.com/realasvop/advent-of-code
 
-# with open('input.txt') as input_file:
-#     lines = input_file.readlines()
+G = nx.DiGraph()
 
-lines = puzzle.input_data.splitlines()
+for line in puzzle.input_data.splitlines():
+    nodes = line.split(")")
+    G.add_edge(nodes[0], nodes[1])
 
-nodes = defaultdict(lambda: set())
-for line in lines:
-    a, b = line.strip().split(")")
-    nodes[a].add(b)
-    nodes[b].add(a)
+count = 0
+for node in G:
+    for a in nx.ancestors(G, node):
+        count += 1
+print('pt1:', count)
 
-def bfs(nodes, start):
-    queue = [(start, 0)]
-    seen = set()
-    for node, depth in queue:
-        seen.add(node)
-        next_nodes = nodes.get(node, [])
-        queue += [(new_node, depth + 1) for new_node in next_nodes if new_node not in seen]
-        yield node, depth
-
-print(sum(depth for node, depth in bfs(nodes, 'COM')))
-print(next(depth - 2 for node, depth in bfs(nodes, 'YOU') if node == 'SAN'))
+path = nx.shortest_path_length(G.to_undirected(), source='YOU', target='SAN') - 2  # adjust to the orbited objects
+print('pt2:', path)
