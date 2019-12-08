@@ -1,17 +1,21 @@
-import aoc_common as ac
-import itertools
-from aocd.models import Puzzle
 
-puzzle = Puzzle(year=2019, day=7)
+import itertools
+
+# puzzle = Puzzle(year=2019, day=7)
 
 # print(puzzle.input_data)
 
+input_data = """3,8,1001,8,10,8,105,1,0,0,21,34,43,60,81,94,175,256,337,418,99999,3,9,101,2,9,9,102,4,9,9,4,9,99,3,9,102,2,9,9,4,9,99,3,9,102,4,9,9,1001,9,4,9,102,3,9,9,4,9,99,3,9,102,4,9,9,1001,9,2,9,1002,9,3,9,101,4,9,9,4,9,99,3,9,1001,9,4,9,102,2,9,9,4,9,99,3,9,102,2,9,9,4,9,3,9,1001,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,101,1,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,1001,9,2,9,4,9,3,9,101,2,9,9,4,9,3,9,101,1,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,99,3,9,101,2,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,101,1,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,1001,9,1,9,4,9,3,9,1001,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,1001,9,2,9,4,9,99,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,1002,9,2,9,4,9,3,9,1001,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,101,2,9,9,4,9,3,9,1001,9,2,9,4,9,99,3,9,101,2,9,9,4,9,3,9,101,1,9,9,4,9,3,9,101,1,9,9,4,9,3,9,101,1,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,1001,9,2,9,4,9,3,9,1001,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,2,9,4,9,3,9,1002,9,2,9,4,9,99,3,9,1001,9,1,9,4,9,3,9,1001,9,1,9,4,9,3,9,1002,9,2,9,4,9,3,9,1001,9,1,9,4,9,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,2,9,4,9,3,9,1001,9,2,9,4,9,3,9,101,2,9,9,4,9,3,9,102,2,9,9,4,9,99"""
 
 
-def intcode_computer(intcode_list, first, second=None):
-    counter = 0
-    input = first
-    output = []
+def intcode_computer(state, first, phase=None):
+    intcode_list = state[0]
+    counter = state[1]
+    if phase:
+        input = phase
+    else:
+        input = first
+    output = first
     try:
         while True:
 
@@ -61,8 +65,8 @@ def intcode_computer(intcode_list, first, second=None):
                 param1 = intcode_list[counter + 1]
                 intcode_list[param1] = input
                 counter += 2
-                if second:
-                    input = second.pop(0)
+                if phase:
+                    input = first
                 continue
 
             if ones == 4:
@@ -72,9 +76,9 @@ def intcode_computer(intcode_list, first, second=None):
                     param1 = intcode_list[intcode_list[counter + 1]]
 
                 # print(param1)
-                output.append(param1)
+                output = param1
                 counter += 2
-                continue
+                return [intcode_list, counter, False], output
 
             if ones == 5:
                 if hundreds == 1:
@@ -150,34 +154,48 @@ def intcode_computer(intcode_list, first, second=None):
 
             if ones == 9 and tens == 9:
                 # print("Complete")
-                return output
+                return [intcode_list, counter, True], output
     except:
         print(counter)
 
-test_input = "3,52,1001,52,-5,52,3,53,1,52,56,54,1007,54,5,55,1005,55,26,1001,54,-5,54,1105,1,12,1,53,54,53,1008,54,0,55,1001,55,1,55,2,53,55,53,4,53,1001,56,-1,56,1005,56,6,99,0,0,0,0,10"
+# test_input = "3,52,1001,52,-5,52,3,53,1,52,56,54,1007,54,5,55,1005,55,26,1001,54,-5,54,1105,1,12,1,53,54,53,1008,54,0,55,1001,55,1,55,2,53,55,53,4,53,1001,56,-1,56,1005,56,6,99,0,0,0,0,10"
 
-intcode_list = puzzle.input_data.split(",")
+intcode_list = input_data.split(",")
 
-test_list = test_input.split(",")
+# test_list = test_input.split(",")
 
-original_intcode_list = [ int(x) for x in test_list]
+original_intcode_list = [int(x) for x in intcode_list]
 
 
-def run_options(list, start, initial):
-    if initial:
-        first = (intcode_computer(original_intcode_list.copy(), start))
-    else:
-        first = (intcode_computer(original_intcode_list.copy(), list[0], start))
-    # print(first)
-    second = (intcode_computer(original_intcode_list.copy(), list[1], first))
-    # print(second)
-    third =(intcode_computer(original_intcode_list.copy(), list[2], second))
-    # print(third)
-    fourth = (intcode_computer(original_intcode_list.copy(), list[3], third))
-    # print(fourth)
-    fifth = (intcode_computer(original_intcode_list.copy(), list[4], fourth))
+def run_options(list):
+    # Machine state, instruction point, quit
+    first_state = [original_intcode_list.copy(), 0, False]
+    second_state = [original_intcode_list.copy(), 0, False]
+    third_state = [original_intcode_list.copy(), 0, False]
+    fourth_state = [original_intcode_list.copy(), 0, False]
+    fifth_state = [original_intcode_list.copy(), 0, False]
 
-    return fifth
+    fifth_output = 0
+    first_run = True
+
+    while True:
+        if first_run:
+            first_state, first_output = (intcode_computer(first_state, fifth_output, list[0]))
+            second_state, second_output = (intcode_computer(second_state, first_output, list[1]))
+            third_state, third_output = (intcode_computer(third_state, second_output, list[2]))
+            fourth_state, fourth_output = (intcode_computer(fourth_state, third_output, list[3]))
+            fifth_state, fifth_output = (intcode_computer(fifth_state, fourth_output, list[4]))
+        else:
+            first_state, first_output = (intcode_computer(first_state, fifth_output))
+            second_state, second_output = (intcode_computer(second_state, first_output))
+            third_state, third_output = (intcode_computer(third_state, second_output))
+            fourth_state, fourth_output = (intcode_computer(fourth_state, third_output))
+            fifth_state, fifth_output = (intcode_computer(fifth_state, fourth_output))
+
+        first_run = False
+
+        if fifth_state[2]:
+            return fifth_output
 
 
 # Part One
@@ -192,25 +210,10 @@ def run_options(list, start, initial):
 # puzzle.answer_a = max
 
 # Part Two
-# max = 0
-# for i in itertools.permutations([5, 6, 7, 8, 9], 5):
-#     start = 0
-#     initial = True
-#     while True:
-#         current = run_options(i, start, initial)
-#         start = current
-#         initial = False
-#         if current > max:
-#             max = current
-
-
 max = 0
-start = 0
-initial = True
-while True:
-    current = run_options([9,7,8,5,6], start, initial)
-    start = current
-    initial = False
-    print(current)
+for i in itertools.permutations([5, 6, 7, 8, 9, ], 5):
+    current = run_options(i)
+    if current > max:
+        max = current
 
-# print(max)
+print(max)
