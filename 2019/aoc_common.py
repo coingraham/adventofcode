@@ -341,6 +341,160 @@ def check_list_against_previous(l):
     return all(c1 <= c2 for c1, c2 in zip(str(l), str(l)[1:]))
 
 
+def get_parameters(intcode_list, raw, relative_base, mode):
+    if mode == 0:
+        return intcode_list[raw]
+    if mode == 1:
+        return raw
+    if mode == 2:
+        return intcode_list[raw + relative_base]
+
+
+def get_write_parameters(intcode_list, raw, relative_base, mode):
+    if mode == 0:
+        return raw
+    if mode == 1:
+        return None
+    if mode == 2:
+        return raw + relative_base
+
+
+def full_intcode_computer(ram, pointer, rb, loc={}):
+
+    # input = loc.get("color", 0)
+    relative_base = rb
+    counter = pointer
+    if len(ram) < 100000:
+        pre_buffer = [0 for x in range(10000)]
+        ram.extend(pre_buffer)
+
+    while True:
+        try:
+            input = loc.get('color', 0)
+            item = ram[counter]
+
+            ones = int(str(item)[-1])
+            tens = int(str(item // 10)[-1])
+            hundreds = int(str(item // 100)[-1])
+            thousands = int(str(item // 1000)[-1])
+            ten_thousands = int(str(item // 10000)[-1])
+
+            if ones == 1:
+                raw1 = ram[counter + 1]
+                raw2 = ram[counter + 2]
+                raw3 = ram[counter + 3]
+                param1 = get_parameters(ram, raw1, relative_base, hundreds)
+                param2 = get_parameters(ram, raw2, relative_base, thousands)
+                param3 = get_write_parameters(ram, raw3, relative_base, ten_thousands)
+
+                position = param3
+                ram[position] = param1 + param2
+                counter += 4
+                continue
+
+            if ones == 2:
+                raw1 = ram[counter + 1]
+                raw2 = ram[counter + 2]
+                raw3 = ram[counter + 3]
+                param1 = get_parameters(ram, raw1, relative_base, hundreds)
+                param2 = get_parameters(ram, raw2, relative_base, thousands)
+                param3 = get_write_parameters(ram, raw3, relative_base, ten_thousands)
+
+                position = param3
+                ram[position] = param1 * param2
+                counter += 4
+                continue
+
+            if ones == 3:
+                raw1 = ram[counter + 1]
+                param1 = get_write_parameters(ram, raw1, relative_base, hundreds)
+                ram[param1] = input
+                counter += 2
+                continue
+
+            if ones == 4:
+                raw1 = ram[counter + 1]
+                param1 = get_parameters(ram, raw1, relative_base, hundreds)
+
+                # print(param1)
+                counter += 2
+                # input = loc.get('color', 0)
+
+                yield param1
+
+            if ones == 5:
+                raw1 = ram[counter + 1]
+                raw2 = ram[counter + 2]
+                param1 = get_parameters(ram, raw1, relative_base, hundreds)
+                param2 = get_parameters(ram, raw2, relative_base, thousands)
+
+                if param1 == 0:
+                    counter += 3
+                else:
+                    counter = param2
+                    continue
+
+            if ones == 6:
+                raw1 = ram[counter + 1]
+                raw2 = ram[counter + 2]
+                param1 = get_parameters(ram, raw1, relative_base, hundreds)
+                param2 = get_parameters(ram, raw2, relative_base, thousands)
+
+                if param1 != 0:
+                    counter += 3
+                else:
+                    counter = param2
+                    continue
+
+            if ones == 7:
+                raw1 = ram[counter + 1]
+                raw2 = ram[counter + 2]
+                raw3 = ram[counter + 3]
+                param1 = get_parameters(ram, raw1, relative_base, hundreds)
+                param2 = get_parameters(ram, raw2, relative_base, thousands)
+                param3 = get_write_parameters(ram, raw3, relative_base, ten_thousands)
+
+                position = param3
+
+                if param1 < param2:
+                    ram[position] = 1
+                else:
+                    ram[position] = 0
+
+                counter += 4
+                continue
+
+            if ones == 8:
+                raw1 = ram[counter + 1]
+                raw2 = ram[counter + 2]
+                raw3 = ram[counter + 3]
+                param1 = get_parameters(ram, raw1, relative_base, hundreds)
+                param2 = get_parameters(ram, raw2, relative_base, thousands)
+                param3 = get_write_parameters(ram, raw3, relative_base, ten_thousands)
+
+                position = param3
+
+                if param1 == param2:
+                    ram[position] = 1
+                else:
+                    ram[position] = 0
+
+                counter += 4
+                continue
+
+            if ones == 9 and tens == 9:
+                return "Complete"
+
+            if ones == 9:
+                raw1 = ram[counter + 1]
+                param1 = get_parameters(ram, raw1, relative_base, hundreds)
+
+                relative_base += param1
+                counter += 2
+        except:
+            print(counter)
+
+
 # Directional Dictionary for Grid Movements
 # DX = dict(zip('LRUD', [-1, 1, 0, 0]))
 # DY = dict(zip('LRUD', [0, 0, 1, -1]))
@@ -358,3 +512,21 @@ def check_list_against_previous(l):
 # print(move_complex("D", complex1))
 # print(move_complex("L", complex1))
 # print(move_complex("R", complex1))
+
+
+def robot_turner(coord, direction, color):
+    turn_map = {
+        "N": ["W", "E"],
+        "S": ["E", "W"],
+        "W": ["S", "N"],
+        "E": ["N", "S"]
+    }
+
+    d = turn_map[direction][color]
+
+    # Directional Dictionary for Grid Movements
+    DX = dict(zip('WENS', [-1, 1, 0, 0]))
+    DY = dict(zip('WENS', [0, 0, 1, -1]))
+
+    return (coord[0] + DX[d], coord[1] + DY[d]), d
+
