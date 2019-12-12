@@ -1,6 +1,7 @@
 import aoc_common as ac
 import numpy as np
 from aocd.models import Puzzle
+import time
 
 puzzle = Puzzle(year=2019, day=12)
 
@@ -14,13 +15,14 @@ test2 = """<x=-8, y=-10, z=0>
 <x=2, y=-7, z=3>
 <x=9, y=-8, z=-3>"""
 
-ints = ac.ints(puzzle.input_data)
+ints = ac.ints(test2)
+# ints = ac.ints(puzzle.input_data)
 
 
-def get_gravity(set, old):
-    vel = [get_offset(j, set[:,i]) for i in range(3) for j in set[:,i]]
-    vel = np.array(vel).reshape(3, 4)
-    return np.add(np.swapaxes(vel, 0, 1), old)
+def get_gravity(positions, old):
+    velocity = [get_offset(j, positions[:, i]) for i in range(3) for j in positions[:, i]]
+    velocity = np.array(velocity).reshape(3, 4)
+    return np.add(np.swapaxes(velocity, 0, 1), old)
 
 
 def get_offset(v, l):
@@ -37,17 +39,17 @@ def calc_pow(m, n):
     return sum([np.sum(m[i,:]) * np.sum(n[i,:]) for i in range(4)])
 
 
-def get_repeater(m, n):
+def get_repeater_brute(m, n):
     s, p, v = 1, 0, 0
     orig_pos = m
     orig_vel = n
+    prt = []
+    vrt = []
     while True:
         n = np.add([get_offset(i, m) for i in m], n)
         m = np.add(m, n)
-
         if np.array_equal(m, orig_pos) and np.array_equal(n, orig_vel):
             return s
-
         s += 1
 
 
@@ -68,4 +70,6 @@ while True:
         break
 
 # Part 2
-print(np.lcm.reduce([get_repeater(pos[:,i], vel[:,i]) for i in range(3)]))
+p1 = time.time()
+print(np.lcm.reduce([get_repeater_brute(pos[:, i], vel[:, i]) for i in range(3)]))
+print("Took {} seconds".format(time.time() - p1))
