@@ -360,8 +360,6 @@ def get_write_parameters(intcode_list, raw, relative_base, mode):
 
 
 def full_intcode_computer(ram, pointer, rb, loc={}):
-
-    # input = loc.get("color", 0)
     relative_base = rb
     counter = pointer
     if len(ram) < 100000:
@@ -370,7 +368,6 @@ def full_intcode_computer(ram, pointer, rb, loc={}):
 
     while True:
         try:
-            input = loc.get('color', 0)
             item = ram[counter]
 
             ones = int(str(item)[-1])
@@ -408,7 +405,7 @@ def full_intcode_computer(ram, pointer, rb, loc={}):
             if ones == 3:
                 raw1 = ram[counter + 1]
                 param1 = get_write_parameters(ram, raw1, relative_base, hundreds)
-                ram[param1] = input
+                ram[param1] = loc.get('my_input', 0)
                 counter += 2
                 continue
 
