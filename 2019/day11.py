@@ -46,9 +46,11 @@ y = [j + min_y for j in y]
 message = np.zeros([6, 43])
 message[y, x] = z
 
-message = np.where(message == 0, " ","■")
+# message = np.where(message == 0, " ","■")
 
-print(np.array2string(np.flipud(message), max_line_width=np.inf))
+ac.screen(painting)
+
+# print(np.array2string(np.flipud(message), max_line_width=np.inf))
 
 
 

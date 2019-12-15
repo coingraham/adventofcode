@@ -4,6 +4,78 @@ import parse
 import math
 import operator
 import re
+from PIL import Image
+from PIL import ImageOps
+import numpy as np
+
+
+def screen(coord_dictionary):
+    max_x, max_y, offset_x, offset_y = get_frame(coord_dictionary)
+
+    background = 0
+
+    red = (255, 0, 0, 0)
+    white = (255, 255, 255, 0)
+    green = (0, 255, 0, 0)
+    blue = (0, 0, 255, 0)
+
+    im = Image.new('RGB', (max_x + offset_x + 1, max_y + offset_y + 1), color=background)
+
+    for k, v in coord_dictionary.items():
+        if v == 1:
+            im.putpixel((k[0] + offset_x, k[1] + offset_y), red)
+        if v == 2:
+            im.putpixel((k[0] + offset_x, k[1] + offset_y), white)
+        if v == 3:
+            im.putpixel((k[0] + offset_x, k[1] + offset_y), green)
+        if v == 4:
+            im.putpixel((k[0] + offset_x, k[1] + offset_y), blue)
+
+    h, w = im.size
+
+    upsize = 50
+
+    im = im.resize((h * upsize, w * upsize))
+
+    # im.save('blah.png')
+    # im = ImageOps.flip(im)
+    im.show()
+
+
+def screen_np(coord_dictionary):
+    max_x, max_y, offset_x, offset_y = get_frame(coord_dictionary)
+
+    background = 0
+    red = (255, 0, 0, 0)
+    white = (255, 255, 255, 0)
+    green = (0, 255, 0, 0)
+    blue = (0, 0, 255, 0)
+
+    im = Image.new('RGB', (max_x + 1, max_y + 1), color=background)
+
+    for k, v in coord_dictionary.items():
+        if v == 1:
+            im.putpixel(k, red)
+        if v == 2:
+            im.putpixel(k, white)
+        if v == 3:
+            im.putpixel(k, green)
+        if v == 4:
+            im.putpixel(k, blue)
+
+    # im.save('blah.png')
+    im.show()
+
+
+def get_frame(coords):
+    np_coords = np.array([(k[0], k[1]) for k in coords.keys()])
+    max_x = max(np_coords[:, 0])
+    max_y = max(np_coords[:, 1])
+    offset_x = np.abs(min(np_coords[:, 0]))
+    offset_y = np.abs(min(np_coords[:, 1]))
+
+    return max_x, max_y, offset_x, offset_y
+
 
 
 def get_sum_of_array(array):
@@ -405,7 +477,7 @@ def full_intcode_computer(ram, pointer, rb, loc={}):
             if ones == 3:
                 raw1 = ram[counter + 1]
                 param1 = get_write_parameters(ram, raw1, relative_base, hundreds)
-                ram[param1] = loc.get('my_input', 0)
+                ram[param1] = loc.get('color', 0)
                 counter += 2
                 continue
 
