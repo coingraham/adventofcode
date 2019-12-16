@@ -73,24 +73,21 @@ def screen_complex(coord_dictionary):
     im = Image.new('RGB', (max_x + offset_x + 1, max_y + offset_y + 1), color=background)
 
     for k, v in coord_dictionary.items():
-        if k == 0:
-            v = "X"
-        if v == "O":
-            print(k)
         k = (int(k.real) + offset_x, int(k.imag) + offset_y)
         if v == "#":
             im.putpixel(k, red)
-        if v == ".":
+        elif v == ".":
             im.putpixel(k, white)
-        if v == "X":
+        elif v == "X":
             im.putpixel(k, green)
-        if v == "O":
+        else:
             im.putpixel(k, blue)
 
     h, w = im.size
 
     upsize = 10
     im = im.resize((h * upsize, w * upsize))
+    im = ImageOps.flip(im)
     im.show()
 
 
