@@ -28,6 +28,10 @@ def get_matrix(x, y):
     return [[(i, j) for j in range(x)] for i in range(y)]
 
 
+def get_complex_matrix(x, y):
+    return [complex(i, j) for j in range(x) for i in range(y)]
+
+
 def remove_item_from_list_in_dictionary_value(dictionary, item):
     for k, v in dictionary.items():
         if item in v:

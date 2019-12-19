@@ -68,9 +68,9 @@ def screen_complex(coord_dictionary):
 
     for k, v in coord_dictionary.items():
         k = (int(k.real) + offset_x, int(k.imag) + offset_y)
-        if v == "#":
+        if v == 1:
             im.putpixel(k, red)
-        elif v == ".":
+        elif v == 0:
             im.putpixel(k, white)
         elif v == "X":
             im.putpixel(k, green)

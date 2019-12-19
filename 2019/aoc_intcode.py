@@ -207,10 +207,6 @@ def intcode_computer(intcode_list, input):
                 counter += 4
 
             if ones == 3:
-                # if hundreds == 1:
-                #     param1 = intcode_list[counter + 1]
-                # else:
-                #     param1 = intcode_list[intcode_list[counter + 1]]
                 param1 = intcode_list[counter + 1]
                 intcode_list[param1] = input
                 counter += 2
