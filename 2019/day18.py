@@ -36,6 +36,12 @@ test4 = """########################
 ###g#h#i################
 ########################"""
 
+test5 = """########################
+#...............b.C.D.f#
+#.######################
+#.....@.a.B.c.d.A.e.F.g#
+########################"""
+
 movement = {
     "north": 0 + 1j,
     "south": 0 - 1j,
@@ -43,8 +49,9 @@ movement = {
     "west": -1 + 0j
 }
 
-map_lines = test3.splitlines()
+map_lines = test4.splitlines()
 # map_lines = puzzle.input_data.splitlines()
+
 master = {}
 for y, line in enumerate(map_lines):
     for x, char in enumerate(list(line)):
@@ -129,17 +136,6 @@ def get_doors(coord1, coord2):
     return in_between
 
 
-# def get_step_by_step(coord1, coord2, path):
-#     path.append(coord1)
-#     options = [x for x in get_options(coord1) if x not in path]
-#
-#     for option in options:
-#         if coord1 == coord2:
-#             yield path
-#         get_step_by_step(option, coord2, path)
-#
-#
-# [print(x) for x in get_step_by_step(master["c"][0], master["e"][0], [])]
 value_map_cache = {}
 
 
@@ -220,11 +216,7 @@ def process_doors(door_keys, this_key):
         for item, values in door_cache[this_key].items():
             for n, door in enumerate(values):
                 if door[0] == door_key.upper():
-                    # delete.append((item, n))
                     different[item].pop(0)
-
-    # for deleted in reversed(delete):
-    #     del different[deleted[0]][deleted[1]]
 
     for item, values in different.items():
         if item != this_key and not values:
