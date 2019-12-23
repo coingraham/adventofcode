@@ -3,11 +3,12 @@ from itertools import takewhile, combinations_with_replacement, combinations, pe
 import time
 import string
 import copy
+import networkx as nx
 
 start_time = time.time()
-from aocd.models import Puzzle
-
-puzzle = Puzzle(year=2019, day=18)
+# from aocd.models import Puzzle
+#
+# puzzle = Puzzle(year=2019, day=18)
 
 test = """########################
 #f.D.E.e.C.b.A.@.a.B.c.#
@@ -49,7 +50,7 @@ movement = {
     "west": -1 + 0j
 }
 
-map_lines = test4.splitlines()
+map_lines = test3.splitlines()
 # map_lines = puzzle.input_data.splitlines()
 
 master = {}
@@ -63,6 +64,7 @@ for y, line in enumerate(map_lines):
 
 legend = {}
 pathing = []
+all_keys = sorted([x for x in master.keys() if x.islower()])
 lower_letter_legend = {}
 lower_coord_legend = {}
 lower_at_legend = {}
@@ -224,12 +226,61 @@ def process_doors(door_keys, this_key):
         else:
             continue
 
-    return available
+    return sorted(available)
 
 
 length_cache = build_length_cache(lower_at_legend)
 door_cache = build_door_cache(lower_at_legend)
 
+
+def recursive_stepper():
+    start = "@"
+    steps = 0
+    filler = ""
+    current = (start, steps, set([]))
+    available_cache = {}
+    current_min = {}
+    answers = []
+
+    def trail_step(current, current_min={}):
+        working_item = current
+        start_letter = working_item[0]
+        start_door = start_letter.upper()
+        local_list = sorted(working_item[2])
+        cache_name = "{}_{}".format(start_letter, "".join([str(x) for x in local_list]))
+        if cache_name in available_cache:
+            available = available_cache[cache_name]
+        else:
+            available = process_doors(local_list, start_letter)
+            available_cache[cache_name] = available
+
+        for processed in working_item[2]:
+            if processed in available:
+                available.remove(processed)
+
+        if start_letter not in local_list:
+            local_list.append(start_letter)
+
+        if len(available) == 0:
+            answers.append(working_item[1])
+
+        for option in available:
+            steps_to = length_cache[start_letter][option]
+            new_steps = steps_to + working_item[1]
+            min_name = "{}_{}".format(option, "".join([str(x) for x in local_list]))
+            if min_name in current_min:
+                if new_steps > current_min[min_name]:
+                    continue
+                else:
+                    trail_step((option, new_steps, local_list), current_min)
+                    current_min[min_name] = new_steps
+            else:
+                trail_step((option, new_steps, local_list), current_min)
+                current_min[min_name] = new_steps
+
+    trail_step(current, current_min)
+
+recursive_stepper()
 
 start = "@"
 steps = 0
@@ -289,7 +340,3 @@ while tracker:
 
         tracker = new_tracker
         print(len(tracker))
-
-
-print("Complete in {} seconds".format(time.time() - start_time))
-print(min(answers))
