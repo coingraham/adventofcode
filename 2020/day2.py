@@ -1029,9 +1029,7 @@ def check_spaces(password_list):
         letter = parts[1][0]
         password = parts[2]
 
-        if password[min_max[0]] == letter and password[min_max[1]] == letter:
-            pass
-        elif password[min_max[0]] == letter or password[min_max[1]] == letter:
+        if (password[min_max[0]] == letter) is not (password[min_max[1]] == letter):
             valid += 1
 
     return valid
