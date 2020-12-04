@@ -48,4 +48,8 @@ length = len(my_list)
 
 # loop over the list 10 iterations, this would normally fail at mylist[3]
 for x in range(6):
-    print(my_list[x % length])  # "%" is the symbol for modulo in python
+    index_number = x % length
+    print(my_list[index_number])  # "%" is the symbol for modulo in python
+
+
+# Now you know!
