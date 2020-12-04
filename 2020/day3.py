@@ -13,7 +13,7 @@ example = """
 
 example_list = [list(x) for x in example.split()]
 
-with open('day3.in', mode='r') as f:
+with open('test.in', mode='r') as f:
     puzzle_input = [list(x.strip()) for x in f.readlines()]
 
 
