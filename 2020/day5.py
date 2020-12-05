@@ -35,6 +35,6 @@ for i, seat in enumerate(sorted(seatid_list)):
     # for the first time there is a gap
     if i + 51 != seat:
         # Once we find the gap the seat will be one higher so we subtract.  We could also
-        # just return i + 51 instead.
+        # just return i + 51 instead. 
         print(seat - 1)
         break
