@@ -46,7 +46,7 @@ print("\nCycle using modulo:")
 my_list = [1, 2, 3]
 length = len(my_list)
 
-# loop over the list 10 iterations, this would normally fail at mylist[3]
+# loop over the list 6 iterations, this would normally fail at mylist[3]
 for x in range(6):
     index_number = x % length
     print(my_list[index_number])  # "%" is the symbol for modulo in python
