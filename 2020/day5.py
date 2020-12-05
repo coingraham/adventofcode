@@ -8,7 +8,6 @@ BBFFBBFRLL"""
 partitions = puzzle.input_data.split("\n")
 # partitions = example.split("\n")
 
-
 # Starting out, they mention (and highlighted) the word 'binary' which should
 # kick off coding spidey sense.  Hopefully you did some tests and discovered
 # that if you treated the code BFFFBBF as a binary number 1000110 it
