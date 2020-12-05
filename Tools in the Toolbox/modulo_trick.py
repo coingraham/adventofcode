@@ -12,8 +12,8 @@ index_number = 0
 
 # loop over the list 6 iterations, this would normally fail at mylist[3]
 for x in range(6):
-    if index_number >= len(my_list):
-        index_number -= len(my_list)
+    if index_number >= length:
+        index_number -= length
 
     print(my_list[index_number])
     index_number += 1
