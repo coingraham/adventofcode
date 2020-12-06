@@ -19,22 +19,20 @@ partitions = puzzle.input_data.split("\n")
 # Here we collect all the seat ids so we can find a max, we also need this for part 2.
 seatid_list = []
 for partition in partitions:
-    # You can reference a string like a list to do string slicing.  And you can use
-    # negative numbers to walk back from the end.  "TESTING"[-3:] would give "ING"
-    row = partition[:-3].replace("F", "0").replace("B", "1")
-    column = partition[-3:].replace("L", "0").replace("R", "1")
-    seatid_list.append((int(row, 2) * 8) + int(column, 2))
+    # Found some sample code online that utilized translate and maketrans
+    seatid_list.append(int(partition.translate(partition.maketrans("FLBR", "0011")), 2))
 
 # Use the max function to get the max item of a list
 print(max(seatid_list))
 
 # Enumerate will walk through an iterator and return both the step and value.  This
 # keeps you from having to save and track counters and counter += 1.
+min_seatid = min(seatid_list)
 for i, seat in enumerate(sorted(seatid_list)):
-    # Variable i will start at zero and my data starts at 51 so I offset it looking
+    # Variable i will start at zero and my data starts higher so I offset it looking
     # for the first time there is a gap
-    if i + 51 != seat:
+    if i + min_seatid != seat:
         # Once we find the gap the seat will be one higher so we subtract.  We could also
-        # just return i + 51 instead.
+        # just return i + min_seatid instead.
         print(seat - 1)
         break
