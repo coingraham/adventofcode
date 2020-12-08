@@ -20,11 +20,9 @@ b"""
 # groups = example.split("\n")
 groups = puzzle.input_data.split("\n")
 
-print(groups)
-
 
 # Collect groups into sets of customs declarations - part one
-def collect_groups(groups):
+def collect_groups_anyone(groups):
     declarations = []
     temp_declarations = set([])
     for group in groups:
@@ -64,6 +62,7 @@ def collect_groups_everyone(groups):
     declarations.append(temp_declarations[1])
     return declarations
 
+
 # Sum the declarations
 def sum_declarations(declarations):
     total = 0
@@ -73,5 +72,5 @@ def sum_declarations(declarations):
 
 
 if __name__ == '__main__':
-    print(sum_declarations(collect_groups(groups)))
+    print(sum_declarations(collect_groups_anyone(groups)))
     print(sum_declarations(collect_groups_everyone(groups)))
