@@ -26,8 +26,8 @@ dark blue bags contain no other bags."""
 
 # rules = example.split("\n")
 # rules = example2.split("\n")
-# rules = example3.split("\n")
-rules = puzzle.input_data.split("\n")
+rules = example3.split("\n")
+# rules = puzzle.input_data.split("\n")
 
 # Gather colors and relationships.  Maybe work backwards from inside out.
 backward_relationships = {}
@@ -50,19 +50,19 @@ for rule in rules:
         backward_relationships[end_color].append((start_color, number))
 
 # Walk the relationships and discover the sources. Recursive.
-def walk_relationship(relationships, starting, ending):
-    if starting in relationships.keys():
-        for path in relationships[starting]:
-            if path[0] not in ending:
-                ending.append(path[0])
-                walk_relationship(relationships, path[0], ending)
+def walk_relationship(relationships, starting_point, path_list):
+    if starting_point in relationships.keys():
+        for path in relationships[starting_point]:
+            if path[0] not in path_list:
+                path_list.append(path[0])
+                walk_relationship(relationships, path[0], path_list)
 
-    return len(ending)
+    return len(path_list)
 
 
-def walk_relationship_with_counts(relationships, starting, previous, answer_list):
-    if starting in relationships.keys():
-        for path in relationships[starting]:
+def walk_relationship_with_counts(relationships, starting_point, previous, answer_list):
+    if starting_point in relationships.keys():
+        for path in relationships[starting_point]:
             if path[0] == "other":
                 return
 
