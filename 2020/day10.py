@@ -59,19 +59,20 @@ adapters_list.append(adapters_list[-1] + 3)
 
 print(adapters_list)
 
-# joltage = [0, 0]
-# for number, adapter in enumerate(sorted(adapters_list)):
-#
-#     if number == len(adapters_list) - 1:
-#         joltage[1] += 1
-#         print(joltage[0] * joltage[1])
-#         continue
-#
-#     # print("adapter {}, adapter number {}, combined {}".format(adapter, number, adapters_list[number]))
-#     if adapters_list[number + 1] - adapter == 1:
-#         joltage[0] += 1
-#     elif adapters_list[number + 1] - adapter == 3:
-#         joltage[1] += 1
+joltage = [0, 0]
+for number, adapter in enumerate(sorted(adapters_list)):
+
+    if number == len(adapters_list) - 1:
+        joltage[1] += 1
+        print(joltage[0] * joltage[1])
+        continue
+
+    # print("adapter {}, adapter number {}, combined {}".format(adapter, number, adapters_list[number]))
+    if adapters_list[number + 1] - adapter == 1:
+        joltage[0] += 1
+    elif adapters_list[number + 1] - adapter == 3:
+        joltage[1] += 1
+
 
 def get_combinations(number_list, size):
     list_length = len(number_list)
@@ -81,6 +82,7 @@ def get_combinations(number_list, size):
         return len(list(combinations(number_list, size)))
 
     return len(list(combinations(number_list, size))) + get_combinations(number_list, size - 1)
+
 
 cache = {}
 temp = []
@@ -94,10 +96,10 @@ start_chunk = -1
 for number, item in enumerate(sorted(adapters_list)):
 
     try:
-        next = adapters_list[number + 1]
-        if next - item == 1:
+        next_item = adapters_list[number + 1]
+        if next_item - item == 1:
             start_chunk += 1
-        elif next - item == 3:
+        elif next_item - item == 3:
             if start_chunk > 0:
                 if start_chunk in cache.keys():
                     chunks.append(cache[start_chunk])
