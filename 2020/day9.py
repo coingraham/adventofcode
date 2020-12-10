@@ -26,7 +26,7 @@ xmas_list = [int(x) for x in puzzle.input_data.split("\n")]
 # xmas_list = [int(x) for x in example.split("\n")]
 
 def walk_xmas(preamble):
-    for item, tranche in enumerate([(xmas_list[x:x + preamble]) for x in range(0, len(xmas_list) - (preamble))]):
+    for item, tranche in enumerate([(xmas_list[x:x + preamble]) for x in range(0, len(xmas_list) - preamble)]):
         evaluate_me = xmas_list[item + preamble]
         found = False
         for number in tranche:
@@ -41,7 +41,7 @@ def walk_xmas(preamble):
 
 def find_the_group(maximum, target):
     for size in range(2, maximum):
-        for tranche in [(xmas_list[x:x + size]) for x in range(0, len(xmas_list) - (size))]:
+        for tranche in [(xmas_list[x:x + size]) for x in range(0, len(xmas_list) - size)]:
             if sum(tranche) == target:
                 return min(tranche) + max(tranche)
 

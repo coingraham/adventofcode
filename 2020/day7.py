@@ -49,7 +49,8 @@ for rule in rules:
             backward_relationships[end_color] = []
         backward_relationships[end_color].append((start_color, number))
 
-# Walk the relationships and discover the sources. Recursive.
+
+# Walk the relationships (backward) and discover the sources. Recursive.
 def walk_relationship(relationships, starting_point, path_list):
     if starting_point in relationships.keys():
         for path in relationships[starting_point]:
@@ -58,6 +59,18 @@ def walk_relationship(relationships, starting_point, path_list):
                 walk_relationship(relationships, path[0], path_list)
 
     return len(path_list)
+
+
+def walk_relationship_alt(relationships, starting_point_bag):
+    bag_list = []
+    if starting_point_bag in relationships.keys():
+        for child_bag in relationships[starting_point_bag]:
+            color = child_bag[0]
+            if color not in bag_list:
+                bag_list.append(color)
+                bag_list.extend(walk_relationship_alt(relationships, color))
+
+    return bag_list
 
 
 def walk_relationship_with_counts(relationships, starting_point, previous, answer_list):
@@ -73,5 +86,24 @@ def walk_relationship_with_counts(relationships, starting_point, previous, answe
 
     return sum(answer_list)
 
-print(walk_relationship(backward_relationships, "shiny gold", []))
+
+def walk_relationship_with_counts_alt(relationships, starting_color, previous_bag_count):
+    answer = 0
+    for child_bag in relationships[starting_color]:
+        color = child_bag[0]
+        if color == "other":
+            return 0
+        else:
+            current_bag_count = int(child_bag[1])
+            multiplier = previous_bag_count * current_bag_count
+            answer += multiplier
+            answer += walk_relationship_with_counts_alt(relationships, color, multiplier)
+
+    return answer
+
+
+# print(walk_relationship(backward_relationships, "shiny gold", []))
 print(walk_relationship_with_counts(forward_relationships, "shiny gold", 1, []))
+
+# print(len(set(walk_relationship_alt(backward_relationships, "shiny gold"))))
+print(walk_relationship_with_counts_alt(forward_relationships, "shiny gold", 1))
