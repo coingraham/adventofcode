@@ -101,8 +101,9 @@ def get_occupied(this_seating_chart):
     return sum([each_row.count("#") for each_row in this_seating_chart])
 
 
+# This is the main part of the script
 previous_count = 99999999
-current_count = 0
+current_count = None
 while True:
     # Build a dict for every point with an array of the 8 values around it.  This is my cache.
     seat_view_tracker = {(i, j): ["." for k in range(8)] for i in range(max_x) for j in range(max_y) if seating_chart[j][i] != "."}
