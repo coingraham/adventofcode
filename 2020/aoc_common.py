@@ -27,3 +27,7 @@ puzzle6 = Puzzle(year=2020, day=6)
 
 print(process_groups_over_lines(puzzle4.input_data, "\n\n", "\n", " "))
 print(process_groups_over_lines(puzzle6.input_data, "\n\n", "\n"))
+
+
+def get_complex_distance(complex1, complex2):
+    return int(abs(complex1.real - complex2.real) + abs(complex1.imag - complex2.imag))
