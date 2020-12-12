@@ -96,8 +96,7 @@ def walk_relationship_with_counts_alt(relationships, starting_color, previous_ba
         else:
             current_bag_count = int(child_bag[1])
             multiplier = previous_bag_count * current_bag_count
-            answer += multiplier
-            answer += walk_relationship_with_counts_alt(relationships, color, multiplier)
+            answer += multiplier + walk_relationship_with_counts_alt(relationships, color, multiplier)
 
     return answer
 

@@ -50,7 +50,7 @@ example2 = """16
 
 adapters_list = sorted([int(x) for x in puzzle.input_data.split("\n")])
 # adapters_list = sorted([int(x) for x in example.split("\n")])
-# adapters_list = sorted([int(x) for x in example2.split("\n")])
+adapters_list = sorted([int(x) for x in example2.split("\n")])
 # adapters_list = sorted([int(x) for x in my_example.split("\n")])
 
 # Add the start and end parts
