@@ -14,10 +14,10 @@ facings = {
     "F": "E",
     "R": ["N", "E", "S", "W"],
     "L": ["N", "W", "S", "E"],
-    "N": complex(0 + 1j),
-    "E": complex(1 + 0j),
-    "S": complex(0 - 1j),
-    "W": complex(-1 + 0j)
+    "N": (0 + 1j),
+    "E": (1 + 0j),
+    "S": (0 - 1j),
+    "W": (-1 + 0j)
 }
 
 
@@ -40,10 +40,12 @@ def turn_waypoint(direction, degrees, waypoint):
     for flip in range(quarter_turns):
         if direction == "L":
             # (x, y) = (-y, x)
-            waypoint = complex(-waypoint.imag, waypoint.real)
+            # Multiplying by j rotates CCW
+            waypoint *= 1j
         else:
             # (x, y) = (y, -x)
-            waypoint = complex(waypoint.imag, -waypoint.real)
+            # Multiplying by -j rotates CW
+            waypoint *= -1j
 
     return waypoint
 
@@ -56,8 +58,8 @@ def move(direction, amount):
 
 
 # Part 1
-original_point = complex(0 + 0j)
-current_point = complex(0 + 0j)
+original_point = (0 + 0j)
+current_point = (0 + 0j)
 for command in commands:
     if command[0] in ("L", "R"):
         turn(command[0], command[1])
@@ -67,9 +69,9 @@ for command in commands:
 print(get_complex_distance(original_point, current_point))
 
 # Part 2
-original_point = complex(0 + 0j)
-current_point = complex(0 + 0j)
-waypoint = complex(10 + 1j)
+original_point = (0 + 0j)
+current_point = (0 + 0j)
+waypoint = (10 + 1j)
 for command in commands:
     if command[0] in ("L", "R"):
         waypoint = turn_waypoint(command[0], command[1], waypoint)
