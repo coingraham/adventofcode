@@ -18,6 +18,7 @@ sample_data = '''
 260
 263'''
 
+# question_input = [int(n) for n in sample_data.split()]
 question_input = [int(n) for n in question_input.split()]
 
 
@@ -37,8 +38,9 @@ def part_two():
     increased = 0
     previous_sum = 0
     for index, item in enumerate(question_input):
-        if index > 3:
+        if index < 3:
             previous_sum += item
+            continue
 
         new_sum = item + previous_sum - question_input[index - 3]
 
@@ -50,5 +52,6 @@ def part_two():
     return increased
 
 
-print(part_one)
-print(part_two)
+if __name__ == '__main__':
+    print(part_one())
+    print(part_two())
