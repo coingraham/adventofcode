@@ -11,8 +11,8 @@ up 3
 down 8
 forward 2'''
 
-# question_input = [item for item in sample_data.splitlines()]
-question_input = [item for item in puzzle.input_data.splitlines()]
+question_input = [item for item in sample_data.splitlines()]
+# question_input = [item for item in puzzle.input_data.splitlines()]
 
 
 def part_one():
@@ -44,13 +44,25 @@ def part_two():
     for line in question_input:
         command, amount_text = line.split(" ")
         amount = int(amount_text)
-        if command == "down":
-            aim += amount
-        if command == "up":
-            aim -= amount
-        if command == "forward":
-            position += complex(amount, 0)
-            position += complex(0, amount * aim)
+
+        # Python 3.9
+        # if command == "down":
+        #     aim += amount
+        # if command == "up":
+        #     aim -= amount
+        # if command == "forward":
+        #     position += complex(amount, 0)
+        #     position += complex(0, amount * aim)
+
+        # Python 3.10
+        match command:
+            case "down":
+                aim += amount
+            case "up":
+                aim -= amount
+            case "forward":
+                position += complex(amount, 0)
+                position += complex(0, amount * aim)
         
     print(position)
     return int(abs(position.real * position.imag))
