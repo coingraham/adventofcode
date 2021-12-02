@@ -46,23 +46,23 @@ def part_two():
         amount = int(amount_text)
 
         # Python 3.9
-        # if command == "down":
-        #     aim += amount
-        # if command == "up":
-        #     aim -= amount
-        # if command == "forward":
-        #     position += complex(amount, 0)
-        #     position += complex(0, amount * aim)
+        if command == "down":
+            aim += amount
+        if command == "up":
+            aim -= amount
+        if command == "forward":
+            position += complex(amount, 0)
+            position += complex(0, amount * aim)
 
         # Python 3.10
-        match command:
-            case "down":
-                aim += amount
-            case "up":
-                aim -= amount
-            case "forward":
-                position += complex(amount, 0)
-                position += complex(0, amount * aim)
+        # match command:
+        #     case "down":
+        #         aim += amount
+        #     case "up":
+        #         aim -= amount
+        #     case "forward":
+        #         position += complex(amount, 0)
+        #         position += complex(0, amount * aim)
         
     print(position)
     return int(abs(position.real * position.imag))
