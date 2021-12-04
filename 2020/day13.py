@@ -3,7 +3,7 @@ from aocd.models import Puzzle
 puzzle = Puzzle(year=2020, day=13)
 
 example = """939
-23,x,x,x,x,x,x,x,x,x,x,x,x,41,x,x,x,x,x,x,x,x,x,509,x,x,x,x,x,x,x,x,x,x,x,x,13,17,x,x,x,x,x,x,x,x,x,x,x,x,x,x,29,x,401,x,x,x,x,x,37,x,x,x,x,x,x,x,x,x,x,x,x,19"""
+5, 7, 19"""
 
 start_time, bus_ids = example.split("\n")
 # start_time, bus_ids = puzzle.input_data.split("\n")
@@ -42,18 +42,19 @@ def find_ordered_times(start, adjustment):
             if (current_time + position) % bus != 0:
                 break
         else:
-            if not saved_results:
-                saved_results.append(current_time)
-            else:
-                saved_results.append(current_time)
-                return saved_results
+            print(current_time)
+            # if not saved_results:
+            #     saved_results.append(current_time)
+            # else:
+            #     saved_results.append(current_time)
+            #     return saved_results
 
 
 # leave_time, correct_bus = search_times(start_time)
 # print("Leaving at {}, on the correct bus {}".format(leave_time, correct_bus))
 # print("The product is {}".format((leave_time - start_time) * correct_bus))
 
-found = find_ordered_times(43282261738355, 88924385404026 - 43282261738355)
+found = find_ordered_times(0, 5)
 print(found)
 
 
