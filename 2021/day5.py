@@ -93,7 +93,7 @@ def part_two():
                     sea_map_part_two = add_to_map(sea_map_part_two, "{},{}".format(step, max_y - i - 1))
 
         matrix = create_matrix(sea_map_part_two)
-        print(print_matrix(matrix))
+        print("{}\n{}\n".format(coordinates, print_matrix(matrix)))
 
     return len([n for n in sea_map_part_two.values() if n > 1])
 

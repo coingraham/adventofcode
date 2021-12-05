@@ -10,6 +10,6 @@ def create_matrix(coord_dict):
 
     for coord in coord_list:
         x, y = [int(n) for n in coord.split(",")]
-        matrix[y][x] = coord_dict[coord]
+        matrix[y][x] = "{}".format(coord_dict[coord])
 
     return matrix
