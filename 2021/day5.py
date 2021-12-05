@@ -1,4 +1,4 @@
-from aoc_common import create_matrix
+from aoc_common import create_matrix_from_dict
 from aoc_common import print_matrix
 from aocd.models import Puzzle
 puzzle = Puzzle(year=2021, day=5)
@@ -16,6 +16,9 @@ sample_data = '''0,9 -> 5,9
 
 question_input = [n.split(" -> ") for n in sample_data.splitlines()]
 # question_input = [n.split(" -> ") for n in puzzle.input_data.splitlines()]
+
+number_list = ",".join([item for pair in question_input for item in pair])
+max_size = max([int(n) for n in number_list.split(",")])
 
 
 def add_to_map(my_map, coord):
@@ -86,15 +89,14 @@ def part_two():
             if (x1 > x2 and y1 > y2) or (x1 < x2 and y1 < y2):
                 min_y = min([y1, y2])
                 for i, step in enumerate(range(min_x + 1, max_x)):
-                    sea_map_part_two = add_to_map(sea_map_part_two, "{},{}".format(step, min_y + i))
+                    sea_map_part_two = add_to_map(sea_map_part_two, "{},{}".format(step, min_y + i + 1))
             else:
                 max_y = max([y1, y2])
                 for i, step in enumerate(range(min_x + 1, max_x)):
                     sea_map_part_two = add_to_map(sea_map_part_two, "{},{}".format(step, max_y - i - 1))
 
-        matrix = create_matrix(sea_map_part_two)
-        print("{}\n{}\n".format(coordinates, print_matrix(matrix)))
-
+    matrix = create_matrix_from_dict(sea_map_part_two, max_size)
+    print("\n{}\n".format(print_matrix(matrix)))
     return len([n for n in sea_map_part_two.values() if n > 1])
 
 
