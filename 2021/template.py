@@ -1,12 +1,10 @@
 from aocd.models import Puzzle
-puzzle = Puzzle(year=2021, day=0) # Update the day
-
-question_input = puzzle.input_data
+puzzle = Puzzle(year=2021, day=0)
 
 sample_data = ''''''
 
 # question_input = [int(n) for n in sample_data.split()]
-# question_input = [int(n) for n in question_input.split()]
+# question_input = [int(n) for n in puzzle.input_data.split()]
 
 
 def part_one():
