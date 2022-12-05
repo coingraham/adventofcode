@@ -33,6 +33,9 @@ def split_crates_moves(my_input):
             positions.append(pos)
 
     # Break up and format the crates
+    # Instead of building the crates in stacks like the puzzle, I
+    # lay the stacks on their side so it will be easy to manipulate them
+    # as lists.
     crates_list = splitlines[:split_here - 1]
     crates = [[] for i in range(width)]
     for crate in list(reversed(crates_list)):
