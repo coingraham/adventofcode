@@ -22,9 +22,9 @@ def question1():
         first_start, first_stop = first.split("-")
         second_start, second_stop = second.split("-")
 
-        first_set = set([i for i in range(int(first_start), int(first_stop) + 1)])
-        second_set = set([i for i in range(int(second_start), int(second_stop) + 1)])
-        union_len = len(first_set.union(second_set))
+        first_set = {i for i in range(int(first_start), int(first_stop) + 1)}
+        second_set = {i for i in range(int(second_start), int(second_stop) + 1)}
+        union_len = len(first_set | second_set)
 
         if union_len == len(first_set) or union_len == len(second_set):
             duplicates += 1
@@ -43,9 +43,9 @@ def question2():
         first_start, first_stop = first.split("-")
         second_start, second_stop = second.split("-")
 
-        first_set = set([i for i in range(int(first_start), int(first_stop) + 1)])
-        second_set = set([i for i in range(int(second_start), int(second_stop) + 1)])
-        union_len = len(first_set.union(second_set))
+        first_set = {i for i in range(int(first_start), int(first_stop) + 1)}
+        second_set = {i for i in range(int(second_start), int(second_stop) + 1)}
+        union_len = len(first_set | second_set)
 
         if union_len != len(first_set) + len(second_set):
             duplicates += 1
