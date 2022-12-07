@@ -34,6 +34,7 @@ def question1():
     question_input = puzzle.input_data
 
     # pwd is the linux command to print the working directory
+    # just using it because it's familiar
     pwd = "/"
 
     # I'll build a dictionary of the directory structure to gather the files and total sizes
@@ -124,6 +125,7 @@ def question2():
     question_input = puzzle.input_data
 
     # pwd is the linux command to print the working directory
+    # just using it because it's familiar
     pwd = "/"
 
     # I'll build a dictionary of the directory structure to gather the files and total sizes

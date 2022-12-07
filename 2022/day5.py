@@ -53,8 +53,8 @@ def split_crates_moves(my_input):
 
 
 def question1():
-    # question_input = sample_input
-    question_input = puzzle.input_data
+    question_input = sample_input
+    # question_input = puzzle.input_data
 
     # Get the crates and moves
     crates, moves = split_crates_moves(question_input)
