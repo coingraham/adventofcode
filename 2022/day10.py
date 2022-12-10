@@ -151,6 +151,7 @@ noop
 noop'''
 
 
+# I eventually abandoned this code for a different approach.
 def question1_alternate():
     question_input = sample_input
 
