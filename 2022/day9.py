@@ -48,10 +48,10 @@ def question1():
     # question_input = sample_input
     question_input = puzzle.input_data
 
-    s = complex(0, 0)
     H = complex(0, 0)
-    previous_H = complex(0, 0)
     T = complex(0, 0)
+
+    # We use this to track the tail positions.  I could use a set instead.
     tracker = {
         complex(0, 0): None
     }
