@@ -7,13 +7,15 @@ sample_input = ''''''
 
 
 def question1():
-    pass
+    question_input = sample_input
+    # question_input = puzzle.input_data
 
     # print(results)
 
 
 def question2():
-    pass
+    question_input = sample_input
+    # question_input = puzzle.input_data
 
     # print(results)
 
