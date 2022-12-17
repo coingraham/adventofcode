@@ -52,3 +52,29 @@ def get_steps(my_map, memo, point):
 
     # Return the path options
     return paths
+
+# ****As seen in someone else's code*****
+# Starting with a list of unique items, I want to be able to use set theory to quickly know
+# are they the same, different, included, excluded
+my_list = {
+    "frank": 0,
+    "mary": 0,
+    "jerome": 0,
+    "maria": 0
+}
+
+# for each item build a bitwise representation
+bitwise_map = {x: 1 << i for i, x in enumerate(my_list)}
+
+print(bitwise_map)
+
+# Create a collection with frank and maria
+collection1 = bitwise_map["frank"] | bitwise_map["maria"]
+
+# Is jerome in the collection?
+print(bool(bitwise_map["jerome"] & collection1))
+
+# Is maria in the collection?
+print(bool(bitwise_map["maria"] & collection1))
+
+
