@@ -221,6 +221,7 @@ def question2():
     run_this = True
 
     while True:
+        # Changed the final check to take the rock and height adjustments into account.
         if total_rocks_dropped == max_rocks_dropped - rock_drop_adjustment:
             print(height_adjustment + rock_pos[1] - 4)
             break
