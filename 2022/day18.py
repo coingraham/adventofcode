@@ -268,13 +268,56 @@ def find_air_pockets(points):
 
     # If a point has a value of 3, it's inside the droplet
     air_pocket_keys = [k for k, v in air_pocket_scores.items() if v == 3]
+    outer_pocket_keys = [k for k, v in air_pocket_scores.items() if v < 3]
 
     # Convert from the text string to a list of tuples
     air_pocket_list = [(int(element.split("_")[0]),
                         int(element.split("_")[1]),
                         int(element.split("_")[2])) for element in air_pocket_keys]
 
+    outer_list = []
+    for v in outer_pocket_keys:
+        (x, y, z) = v.split("_")
+        outer_list.append((int(x), int(y), int(z)))
+
+    for outer in outer_list:
+        burn = burn_the_air(outer, air_pocket_list, [])
+        air_pocket_list = [i for i in air_pocket_list if i not in burn]
+
     return air_pocket_list
+
+
+# This was the key to my issue.  Thanks to reddit user bjnord!
+def burn_the_air(air_point, air_pocket_list, results):
+    results.append(air_point)
+
+    x = air_point[0]
+    y = air_point[1]
+    z = air_point[2]
+
+    # Check x axis for other cubes and air pockets
+    if (x - 1, y, z) in air_pocket_list and (x - 1, y, z) not in results:
+        burn_the_air((x - 1, y, z), air_pocket_list, results)
+
+    if (x + 1, y, z) in air_pocket_list and (x + 1, y, z) not in results:
+        burn_the_air((x + 1, y, z), air_pocket_list, results)
+
+    # Check y axis for other cubes and air pockets
+    if (x, y - 1, z) in air_pocket_list and (x, y - 1, z) not in results:
+        burn_the_air((x, y - 1, z), air_pocket_list, results)
+
+    if (x, y + 1, z) in air_pocket_list and (x, y + 1, z) not in results:
+        burn_the_air((x, y + 1, z), air_pocket_list, results)
+
+    # Check z axis for other cubes and air pockets
+    if (x, y, z - 1) in air_pocket_list and (x, y, z - 1) not in results:
+        burn_the_air((x, y, z - 1), air_pocket_list, results)
+
+    if (x, y, z + 1) in air_pocket_list:
+        if (x, y, z + 1) not in results:
+            burn_the_air((x, y, z + 1), air_pocket_list, results)
+
+    return results
 
 
 def question1():
@@ -301,8 +344,8 @@ def question1():
 
 def question2():
     # question_input = sample_input
-    question_input = alternate_sample
-    # question_input = puzzle.input_data
+    # question_input = alternate_sample
+    question_input = puzzle.input_data
 
     points = [(int(element.split(",")[0]), int(element.split(",")[1]), int(element.split(",")[2]))
               for element in question_input.splitlines()]
