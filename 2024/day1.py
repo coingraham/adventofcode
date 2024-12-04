@@ -12,7 +12,6 @@ sample_data = '''3   4
 # q_i = [n for n in sample_data.splitlines()]
 q_i = [n for n in puzzle.input_data.splitlines()]
 
-
 def part_one():
     list1, list2 = [], []
     for item in q_i:
@@ -23,9 +22,9 @@ def part_one():
     list1.sort()
     list2.sort()
 
-    result = list(map(lambda x: abs(x[0] - x[1]), zip(list1, list2)))
+    result = sum(map(lambda x: abs(x[0] - x[1]), zip(list1, list2)))
 
-    return sum(result)
+    return result
 
 
 def part_two():
