@@ -33,24 +33,23 @@ sample_data = '''47|53
 # q_i = [n for n in sample_data.splitlines()]
 q_i = [n for n in puzzle.input_data.splitlines()]
 
-before = {}
-after = {}
+# Process inputs
+import collections as col
+
+followers = col.defaultdict(list)
+leaders = col.defaultdict(list)
 updates = []
 non_compliant = []
 for line in q_i:
+    # Get all the rules
     if "|" in line:
         i, j = map(int, line.split('|'))
 
-        if i not in before:
-            before[i] = []
+        # I like making dictionaries both ways
+        followers[i].append(j)
+        leaders[j].append(i)
 
-        before[i].append(j)
-
-        if j not in after:
-            after[j] = []
-
-        after[j].append(i)
-
+    # Get all the updates
     if "," in line:
         updates.append([*map(int, line.split(","))])
 
@@ -67,13 +66,14 @@ def check_values(update):
             return update[middle]
 
         # check middle, are its numbers before and after correct?
-        for follower in before.get(item, []):
+        for follower in followers.get(item, []):
             if follower in update and update.index(follower) < i:
                 return False
 
-        for leaders in after.get(item, []):
-            if leaders in update and update.index(leaders) > i:
+        for leader in leaders.get(item, []):
+            if leader in update and update.index(leader) > i:
                 return False
+
 
 def part_one():
     good_updates = []
@@ -96,12 +96,12 @@ def check_values_with_fix(update):
             return update[middle]
 
         # check middle, are its numbers before and after correct?
-        for follower in before.get(item, []):
+        for follower in followers.get(item, []):
             if follower in update and update.index(follower) < i:
                 update.insert(i, update.pop(update.index(follower)))
                 return update
 
-        for leader in after.get(item, []):
+        for leader in leaders.get(item, []):
             if leader in update and update.index(leader) > i:
                 update.insert(i, update.pop(update.index(leader)))
                 return update
