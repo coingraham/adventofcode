@@ -1,5 +1,4 @@
 from aocd.models import Puzzle
-from pebble.pool.process import worker_process
 
 puzzle = Puzzle(year=2024, day=4)
 
@@ -29,7 +28,7 @@ SAXAMASAAA
 MAMMMXMMMM
 MXMXAXMASX'''
 
-from aoc_common import build_2_d, print_matrix, get_8_directions
+from aoc_common import build_2_d, get_8_directions
 # word_puzzle = build_2_d(sample_data)
 word_puzzle = build_2_d(puzzle.input_data)
 
@@ -67,7 +66,7 @@ def walk_this_direction(point, direction, find):
         else:
             return 0
 
-    except IndexError as e:
+    except IndexError:
         raise IndexError
 
 
