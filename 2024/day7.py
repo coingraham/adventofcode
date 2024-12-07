@@ -11,8 +11,8 @@ sample_data = '''190: 10 19
 21037: 9 7 18 13
 292: 11 6 16 20'''
 
-# q_i = [(int(i.strip()), list(map(int, j.split()))) for i, j in (n.split(":") for n in sample_data.splitlines())]
-q_i = [(int(i.strip()), list(map(int, j.split()))) for i, j in (n.split(":") for n in puzzle.input_data.splitlines())]
+q_i = [(int(i.strip()), list(map(int, j.split()))) for i, j in (n.split(":") for n in sample_data.splitlines())]
+# q_i = [(int(i.strip()), list(map(int, j.split()))) for i, j in (n.split(":") for n in puzzle.input_data.splitlines())]
 
 
 def find_operands(digits, answer, target, updated=False):
