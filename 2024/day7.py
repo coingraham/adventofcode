@@ -11,6 +11,7 @@ sample_data = '''190: 10 19
 21037: 9 7 18 13
 292: 11 6 16 20'''
 
+# Get the input and format it
 q_i = [(int(i.strip()), list(map(int, j.split()))) for i, j in (n.split(":") for n in sample_data.splitlines())]
 # q_i = [(int(i.strip()), list(map(int, j.split()))) for i, j in (n.split(":") for n in puzzle.input_data.splitlines())]
 
