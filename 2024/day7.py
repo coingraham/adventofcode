@@ -60,6 +60,7 @@ def find_operands_v2(digits, answer, target):
     digits.insert(0, next_digit)
     return False
 
+
 def part_one(calibrations):
     sum_of_test_values = 0
     for calibration in calibrations:
