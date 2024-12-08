@@ -21,17 +21,19 @@ sample_data = '''............
 # .....
 # .....'''
 
-sample_data = '''.........
-A.A...A.A
-.........'''
+# sample_data = '''.........
+# A.A...A.A
+# .........'''
 
-sample_data = '''...AA
-...AA
-.....'''
+# sample_data = '''...AA
+# ...AA
+# .....'''
 
-sample_data = '''........
-..BABA..
-........'''
+# sample_data = '''........
+# ..BABA..
+# ........'''
+
+sample_data = '''A...A'''
 
 
 from aoc_common import build_2_d, print_matrix, identify_locations
@@ -69,6 +71,9 @@ def part_two(mapping):
         if k == '.':
             continue
 
+        if len(v) > 1:
+            antinodes.update(v)
+
         for antenna in v:
             for alternate in v:
                 if antenna == alternate:
@@ -79,9 +84,6 @@ def part_two(mapping):
 
                 while any(new in sub for sub in mapping.values()):
                     antinodes.add(new)
-                    antinodes.add(antenna)
-                    antinodes.add(alternate)
-
                     new = tuple(a + b for a, b in zip(new, diff))
 
     return len(antinodes)
