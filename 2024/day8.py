@@ -29,6 +29,10 @@ sample_data = '''...AA
 ...AA
 .....'''
 
+sample_data = '''........
+..BABA..
+........'''
+
 
 from aoc_common import build_2_d, print_matrix, identify_locations
 q_i = build_2_d(sample_data)
