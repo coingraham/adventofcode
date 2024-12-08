@@ -1,5 +1,7 @@
+from collections import defaultdict
 from functools import reduce
 import operator
+import collections as col
 
 
 def get_sum_of_array(array):
@@ -22,6 +24,15 @@ def build_2_d(string_input):
     return [list(j) for j in string_input.splitlines()]
 
 
+def identify_locations(mapping):
+    identities = defaultdict(list)
+    for j, row in enumerate(mapping):
+        for i, column in enumerate(row):
+            identities[column].append((j, i))
+
+    return identities
+
+
 def get_8_directions():
     directions = [(i, j) for i in [-1, 0, 1] for j in [-1, 0, 1]]
     directions.pop(4)
@@ -29,7 +40,7 @@ def get_8_directions():
 
 
 def print_matrix(matrix):
-    return "\n".join([" ".join(item) for item in matrix])
+    print("\n".join([" ".join(item) for item in matrix]))
 
 
 def remove_item_from_list_in_dictionary_value(dictionary, item):
