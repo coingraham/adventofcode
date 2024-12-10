@@ -24,6 +24,10 @@ def build_2_d(string_input):
     return [list(j) for j in string_input.splitlines()]
 
 
+def build_2_d_ints(string_input):
+    return [list(map(int, j)) for j in string_input.splitlines()]
+
+
 def identify_locations(mapping):
     identities = defaultdict(list)
     for j, row in enumerate(mapping):
@@ -49,6 +53,24 @@ def remove_item_from_list_in_dictionary_value(dictionary, item):
             dictionary[k].remove(item)
 
     return dictionary
+
+
+
+from multiprocessing import Pool
+from os import cpu_count
+
+def function_to_call(iter):
+    return 0
+
+def part_one(list_to_iterate):
+    threads = max(cpu_count() - 1, 1)
+    sum_of_thing = 0
+
+    with Pool(threads) as pool:
+        for values in pool.imap_unordered(function_to_call, list_to_iterate):
+                sum_of_thing += values
+
+    return sum_of_thing
 
 
 
