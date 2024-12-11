@@ -37,6 +37,16 @@ def identify_locations(mapping):
     return identities
 
 
+def get_next_step_orth(current):
+    options = [(0, -1), (1, 0), (0, 1), (-1, 0)]
+
+    next_steps = []
+    for option in options:
+        next_steps.append((current[0] + current[0], current[1] + option[1]))
+
+    return next_steps
+
+
 def get_8_directions():
     directions = [(i, j) for i in [-1, 0, 1] for j in [-1, 0, 1]]
     directions.pop(4)
