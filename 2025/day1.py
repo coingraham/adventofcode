@@ -19,7 +19,7 @@ L82"""
 # q_i = [n for n in sample_data.splitlines()]
 q_i = [n for n in puzzle.input_data.splitlines()]
 
-safe_options = [n for n in range(100)]
+safe_options = list(range(100))
 
 def part_one():
     position = 50

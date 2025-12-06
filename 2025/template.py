@@ -5,8 +5,8 @@ puzzle = Puzzle(year=2025, day=)
 sample_data = """"""
 
 # question input
-# q_i = [n for n in sample_data.split(",")]
-q_i = [n for n in puzzle.input_data.split(",")]
+q_i = [n for n in sample_data.split(",")]
+# q_i = [n for n in puzzle.input_data.split(",")]
 
 def part_one():
     pass
